@@ -1,23 +1,37 @@
-from django.db import models
+from datetime import datetime
+import mongoengine as mongo
 
-class News(models.Model):
-	title = models.CharField(max_length = 255)
-	pub_date = models.DateTimeField('date published')
-	create_date = models.DateTimeField('date of creation')
-	link = models.URLField(max_length = 255)
-	total_comments = models.IntegerField()
-	# source_id = models.ForeignKey(Source, to_field='id')
-	# user_id = models.ForeignKey(User, to_field='id')
+
+class Source(mongo.Document):
+	name = mongo.StringField(max_length=50, required=True)
+	website = mongo.StringField(max_length=50)
+	logo = mongo.ImageField()
 	
-	def __unicode__(self):
-		return self.title
+	def __unicode__(Source):
+		return Source.name
 		
-	class Meta:
-		db_table = 'news'
-		
-class Source(models.Model):
-	name = models.CharField(max_length = 50)
-	website = models.CharField(max_length = 50)
+	meta = {
+		'collection': 'sources'
+	}
 	
-	class Meta:
-		db_table = 'source'
+	
+class News(mongo.Document):
+	title = mongo.StringField(required=True)
+	source = mongo.ReferenceField(Source)
+	published_at = mongo.DateTimeField(default=datetime.now())
+	created_at = mongo.DateTimeField(default=datetime.now())
+	link = mongo.URLField(required=True)
+	total_comments = mongo.IntField(default=0)
+	tags = mongo.ListField(mongo.StringField(max_length=50))
+	is_featured = mongo.BooleanField(default=False)
+
+	
+	def __unicode__(News):
+		return News.title
+	
+	meta = {
+		'collection' : 'news',
+		'indexes' : ['title'],
+		'ordering' : ['-published_at']
+	}
+		

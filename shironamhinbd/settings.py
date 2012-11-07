@@ -1,4 +1,5 @@
 # Django settings for shironamhinbd project.
+from mongoengine import connect
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,16 +10,24 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'shironambd',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
-    }
+# =========
+# = Mongo =
+# =========
+
+MONGO_DB = {
+    'host': '127.0.0.1:27017',
+    'name': 'shironambd',
 }
+
+MONGO_DB_DEFAULTS = {
+    'name': 'shironambd',
+    'host': 'db02:27017',
+    'alias': 'default',
+}
+MONGO_DB = dict(MONGO_DB_DEFAULTS, **MONGO_DB)
+
+MONGODB = connect(MONGO_DB.pop('name'), **MONGO_DB)
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
