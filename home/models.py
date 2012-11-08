@@ -25,7 +25,6 @@ class News(mongo.Document):
 	tags = mongo.ListField(mongo.StringField(max_length=50))
 	is_featured = mongo.BooleanField(default=False)
 
-	
 	def __unicode__(News):
 		return News.title
 	
