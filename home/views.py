@@ -1,9 +1,16 @@
-# Create your views here.
 from django.http import HttpResponse
-# from django
+from django.template import RequestContext
+from django.template.loader import get_template
+import datetime
 from home.models import News
 
 def index(request):
-	news = News.objects.all()
+	all_news = News.objects.all()
+
+	template = get_template('index.html')
+	context = RequestContext(request, 
+			{'current_date': datetime.datetime.now(), 'all_news':all_news }
+		)
+	html = template.render(context)
 	
-	return HttpResponse(news)
+	return HttpResponse(html)
