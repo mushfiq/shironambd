@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.template.loader import get_template
 import datetime
-from home.models import News
+from shironambd.home.models import News
 
 def index(request):
 	all_news = News.objects.all()
