@@ -1,6 +1,6 @@
-# Django settings for shironamhinbd project.
+# Django settings for shironambd project.
 import os
-PROJECT_DIR = os.path.abspath('../shironamhin')
+PROJECT_DIR = os.path.abspath('../shironam')
 TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates')
 # PUBLIC_DIR = os.path.join(PROJECT_DIR, 'templates/public')
 from mongoengine import connect
@@ -118,10 +118,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'shironamhinbd.urls'
+ROOT_URLCONF = 'shironambd.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'shironamhinbd.wsgi.application'
+WSGI_APPLICATION = 'shironambd.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -141,7 +141,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-	'home',
+	'shironambd.home',
 )
 
 # A sample logging configuration. The only tangible logging

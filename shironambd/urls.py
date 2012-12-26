@@ -7,14 +7,14 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'shironamhinbd.views.home', name='home'),
-    # url(r'^shironamhinbd/', include('shironamhinbd.foo.urls')),
+    # url(r'^$', 'shironambd.views.home', name='home'),
+    # url(r'^shironambd/', include('shironambd.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-	url(r'', 'home.views.index')
+	url(r'', 'shironambd.home.views.index')
     # url(r'^admin/', include(admin.site.urls)),
 )
 urlpatterns += staticfiles_urlpatterns()
