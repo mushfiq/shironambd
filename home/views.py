@@ -14,3 +14,5 @@ def index(request):
 	html = template.render(context)
 	
 	return HttpResponse(html)
+	
+	
