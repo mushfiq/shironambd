@@ -10,8 +10,10 @@ Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 import sys
 import os
 
+import setup_django
 from base import BaseCrawler
-
+from datetime import datetime
+from shironambd.home.models import News
 	
 POLITICS_INDEX = 0
 CRICKET_INDEX = 1
@@ -29,9 +31,19 @@ def debug_me(data_list):
 		return data_list
 	
 
-def iter_soup_clean_text(soup):
+def iter_soup_build_news(soup):
 	for news in soup:
-		yield news.text.replace('&#39;', "'")
+		try:
+			link = news.find('a')['href']
+		except TypeError:
+			link = news['href']
+		title = news.text.replace('&#39;', "'")
+		news = News()
+		news.link = link
+		news.title = title
+		# news.published_at ?? 
+		news.created_at = datetime.now()
+		yield news
 
 class BdNews24English(BaseCrawler):
 	
@@ -47,7 +59,8 @@ class BdNews24English(BaseCrawler):
 		latest_news = latest_newses[13:]
 		for news in latest_newses:
 			print news.text
-		
+	
+			
 	def get_box_news(self):
 		soup = self.get_soup()
 		box_soup_left = soup.findAll('div',{'id':'hmdivbox1'})
@@ -86,44 +99,45 @@ class BdNews24English(BaseCrawler):
 		ls_headlines = []
 		health_headlines = []
 		
-		for news in iter_soup_clean_text(soup_politics):
+		
+		for news in iter_soup_build_news(soup_politics):
 			politics_headlines.append(news)
+			
 		categorized_news.update({'politics':politics_headlines})
-				
-		for news in iter_soup_clean_text(soup_cricket):
+		
+			
+		for news in iter_soup_build_news(soup_cricket):
 			cricket_headlines.append(news)
+		import pdb;pdb.set_trace();	
 		categorized_news.update({'cricket':cricket_headlines})
 
-			
-		for news in iter_soup_clean_text(soup_entertainment):
+		for news in iter_soup_build_news(soup_entertainment):
 			entertainment_headlines.append(news)
 		categorized_news.update({'entertainment':entertainment_headlines})
 
-		for news in iter_soup_clean_text(soup_science):
+		for news in iter_soup_build_news(soup_science):
 			science_headlines.append(news)
 		categorized_news.update({'science':science_headlines})
 			
-		for news in iter_soup_clean_text(soup_campus):
+		for news in iter_soup_build_news(soup_campus):
 			campus_headlines.append(news)
 		categorized_news.update({'campus':campus_headlines})
 	
-		for news in iter_soup_clean_text(soup_bussiness):
+		for news in iter_soup_build_news(soup_bussiness):
 			bussiness_headlines.append(news)
 		categorized_news.update({'bussiness':bussiness_headlines})
 						
-		for news in iter_soup_clean_text(soup_tech):
+		for news in iter_soup_build_news(soup_tech):
 			tech_headlines.append(news)
 		categorized_news.update({'tech':tech_headlines})
 		
-		for news in iter_soup_clean_text(soup_ls):
+		for news in iter_soup_build_news(soup_ls):
 			ls_headlines.append(news)
 		categorized_news.update({'lifestyle':ls_headlines})
 
-		for news in iter_soup_clean_text(soup_health):
+		for news in iter_soup_build_news(soup_health):
 			health_headlines.append(news)
 		categorized_news.update({'health':health_headlines})
-		
-		import pdb;pdb.set_trace();
 		
 		return categorized_news
 
@@ -131,8 +145,8 @@ class BdNews24English(BaseCrawler):
 			
 
 if __name__ == '__main__':
-	bUrl = 'http://bdnews24.com/bangla'
-	# bUrl = 'http://scrape.local/'
+	# bUrl = 'http://bdnews24.com/bangla'
+	bUrl = 'http://scrape.local/'
 	bdN = BdNews24English(bUrl)
 	print bdN.get_category_news()
 	
