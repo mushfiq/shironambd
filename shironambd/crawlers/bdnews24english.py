@@ -26,9 +26,6 @@ LIFESTYLE_INDEX = 7
 HEALTH_INDEX = 8
 ENVIRONMENT_INDEX = 9
 
-def debug_me(data_list):
-	if len(data_list):
-		return data_list
 	
 
 def iter_soup_build_news(soup):
@@ -80,6 +77,7 @@ class BdNews24English(BaseCrawler):
 		modules = soup.findAll('div',{'class':'module'})
 		categorized_news = {}
 		
+		'''TODO: Refactor this method to remove redundent code '''
 		soup_politics = modules[POLITICS_INDEX].findAll('li', {'class':'latestnews'})
 		soup_cricket = modules[CRICKET_INDEX].findAll('a', {'class':'latestnews'})
 		soup_entertainment = modules[ENTERTAINMENT_INDEX].findAll('li', {'class':'latestnews'})
