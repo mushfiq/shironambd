@@ -12,7 +12,7 @@ import os
 
 
 def main():
-	table = soup.find('table', {'width':'984'})s
+	table = soup.find('table', {'width':'984'})
 	pass
 
 
