@@ -40,19 +40,10 @@ def iter_soup_build_news(soup):
 		yield news
 		
 def build_news_object(soup_news):
-	# news_object = {}
-	# title = 
-	# news_object['title'] = soup_news.text.encode('utf8')
 	n = News()
 	n.title = soup_news.find('a').text
 	n.link = soup_news.find('a')['href']
 	return n
-	# print repr(soup_news.text.decode('utf8'))
-	# print news_object
-	# news_object.update({'title':str(title)})
-	# news_object.update({'link':soup_news.find('a')['href']})
-	# return news_object
-		
 
 class BdNews24(BaseCrawler):
 	
@@ -119,16 +110,7 @@ class BdNews24(BaseCrawler):
 		
 
 if __name__ == '__main__':
-	# bUrl = 'http://bdnews24.com/bangla'
 	bUrl = 'http://bangla.bdnews24.com/'
-	# bUrl = 'http://scrape.local/'
-	# bUrl = 'http://bdnews24.com'
 	bdN = BdNews24(bUrl)
 	bdN.get_recent_stories()
-	# print bdN.recent_stories()
-	# print bdN.get_lead_news(bdN.get_soup())
-	# bdN.get_categorized_news()
-	# for n in bdN.recent_stories():
-	# 		print n
-	
 
