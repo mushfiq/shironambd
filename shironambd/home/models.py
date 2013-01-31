@@ -23,6 +23,7 @@ class News(mongo.Document):
 	link = mongo.URLField(required=True)
 	total_comments = mongo.IntField(default=0)
 	tags = mongo.ListField(mongo.StringField(max_length=50))
+	category = mongo.StringField(max_length=20)
 	is_featured = mongo.BooleanField(default=False)
 
 	def __unicode__(News):
