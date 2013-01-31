@@ -16,19 +16,7 @@ from datetime import datetime
 from shironambd.home.models import News
 	
 
-BASE_URL = 'http://bangla.bdnews24.com/'
-POLITICS_INDEX = 0
-CRICKET_INDEX = 1
-ENTERTAINMENT_INDEX = 2
-SCIENCE_INDEX = 3
-CAMPUS_INDEX = 4
-BUSSINESS_INDEX = 5
-TECHNOLOGY_INDEX = 6
-LIFESTYLE_INDEX = 7
-HEALTH_INDEX = 8
-ENVIRONMENT_INDEX = 9
-
-
+BASE_URL = 'http://bdnews24.com/'
 TOTAL_MOST_READ = 7
 TOTAL_RECENT_STORIES = 7
 
@@ -50,35 +38,74 @@ def iter_soup_build_news(soup):
 		# news.published_at ?? 
 		news.created_at = datetime.now()
 		yield news
+		
+def build_news_object(soup_news):
+	# news_object = {}
+	# title = 
+	# news_object['title'] = soup_news.text.encode('utf8')
+	n = News()
+	n.title = soup_news.find('a').text
+	n.link = soup_news.find('a')['href']
+	return n
+	# print repr(soup_news.text.decode('utf8'))
+	# print news_object
+	# news_object.update({'title':str(title)})
+	# news_object.update({'link':soup_news.find('a')['href']})
+	# return news_object
+		
 
-class BdNews24English(BaseCrawler):
+class BdNews24(BaseCrawler):
 	
+	def __inti__(self):
+		self.get_lead_news()
+		self.get_lead_news()
+		self.get_latest_news()
+		self.get_most_read()
+		self.get_recent_stories()
+		self.get_categorized_news()
+		
+		
+	def do_save(self, news_object, tags=None, category=None):
+		if tags != None:
+			news_object.tags = tags
+		if category != None:
+			news_object.category = category
+		try:
+			print news_object
+			news_object.save()
+		except Exception, e:
+			print "Error Occured! %s" % e
+		
 	def get_tab_soup(self):
 		soup = self.get_soup()
 		tab_soup = soup.find('div', {'id':'tabs-2'})
 		return tab_soup
 
-	def get_lead_news(self):
+	def get_lead_news(self, is_categorized=False):
 		soup = self.get_soup()
 		coulumns = soup.findAll('div', {'class':'column-1'})
 		others_lead = coulumns[1].findAll('h3')
+		
 		for news in others_lead:
-			print news.text	
+			if is_categorized != True:
+				self.do_save(build_news_object(news), ['lead_news'])
+			else:
+				yield build_news_object(news)
 		
 	def get_latest_news(self):
 		soup = self.get_soup()
 		latests_soup = soup.find('div',{'id':'latest_news2'})
-		latest_newses = latests_soup.findAll('a')
+		latest_newses = latests_soup.findAll('li')
 		for news in latest_newses:
-			print news.text
-		
-	def most_read(self):
+			self.do_save(build_news_object(news), ['latest_news'])
+					
+	def get_most_read(self):
 		tab_soup = self.get_tab_soup()
 		raw_newses_titles = tab_soup.findAll('li')[3:TOTAL_MOST_READ+3]
 		for news in raw_newses_titles:
-			yield news.text
-			
-	def recent_stories(self):
+			self.do_save(build_news_object(news), ['most_read'])
+
+	def get_recent_stories(self):
 		tab_soup = self.get_tab_soup()
 		raw_newses_titles = tab_soup.findAll('li')[TOTAL_MOST_READ+3:]
 		for news in raw_newses_titles:
@@ -88,7 +115,8 @@ class BdNews24English(BaseCrawler):
 		for category in NEWS_CATEGORIES:
 			self.url = BASE_URL+category 
 			print 'GETTING ...%s NEWS' % category
-			self.get_lead_news()
+			for news in self.get_lead_news(is_categorized=True):
+				self.do_save(news, tags="test", category=category)
 			print '------------------------'
 		
 
@@ -97,10 +125,11 @@ if __name__ == '__main__':
 	bUrl = 'http://bangla.bdnews24.com/'
 	# bUrl = 'http://scrape.local/'
 	# bUrl = 'http://bdnews24.com'
-	bdN = BdNews24English(bUrl)
+	bdN = BdNews24(bUrl)
+	bdN.get_categorized_news()
 	# print bdN.recent_stories()
 	# print bdN.get_lead_news(bdN.get_soup())
-	bdN.get_categorized_news()
+	# bdN.get_categorized_news()
 	# for n in bdN.recent_stories():
 	# 		print n
 	
