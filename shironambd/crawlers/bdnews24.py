@@ -85,7 +85,6 @@ class BdNews24(BaseCrawler):
 		soup = self.get_soup()
 		coulumns = soup.findAll('div', {'class':'column-1'})
 		others_lead = coulumns[1].findAll('h3')
-		
 		for news in others_lead:
 			if is_categorized != True:
 				self.do_save(build_news_object(news), ['lead_news'])
@@ -109,7 +108,7 @@ class BdNews24(BaseCrawler):
 		tab_soup = self.get_tab_soup()
 		raw_newses_titles = tab_soup.findAll('li')[TOTAL_MOST_READ+3:]
 		for news in raw_newses_titles:
-			yield news.text	
+			self.do_save(build_news_object(news), ['recent_stories'])
 		
 	def get_categorized_news(self):
 		for category in NEWS_CATEGORIES:
@@ -117,7 +116,6 @@ class BdNews24(BaseCrawler):
 			print 'GETTING ...%s NEWS' % category
 			for news in self.get_lead_news(is_categorized=True):
 				self.do_save(news, tags="test", category=category)
-			print '------------------------'
 		
 
 if __name__ == '__main__':
@@ -126,7 +124,7 @@ if __name__ == '__main__':
 	# bUrl = 'http://scrape.local/'
 	# bUrl = 'http://bdnews24.com'
 	bdN = BdNews24(bUrl)
-	bdN.get_categorized_news()
+	bdN.get_recent_stories()
 	# print bdN.recent_stories()
 	# print bdN.get_lead_news(bdN.get_soup())
 	# bdN.get_categorized_news()
