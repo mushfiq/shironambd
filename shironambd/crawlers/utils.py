@@ -10,11 +10,15 @@ Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 import sys
 import os
 
+import setup_django
+from shironambd.home.models import News
 
-def main():
-	pass
+
+def build_news_object(soup_news):
+	n = News()
+	n.title = soup_news.find('a').text
+	n.link = soup_news.find('a')['href']
+	return n
 
 
-if __name__ == '__main__':
-	main()
 
