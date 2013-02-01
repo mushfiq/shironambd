@@ -20,8 +20,17 @@ BASE_URL = 'http://banglanews24.com/'
 TOTAL_MOST_READ = 7
 TOTAL_RECENT_STORIES = 7
 
+
+NEWS_CATEGORIES = {
+'politics':'http://www.banglanews24.com/categorizednews.php?newtype=3',
+'natinal':'http://www.banglanews24.com/categorizednews.php?newtype=15',
+'ecoomy':'http://www.banglanews24.com/categorizednews.php?newtype=2'
+}
+
 def clean_text(text):
 	return text.replace('&nbsp;', '')
+	
+
 
 class BanglaNews24(BaseCrawler):
 	
@@ -67,10 +76,18 @@ class BanglaNews24(BaseCrawler):
 			return None
 		
 		
+	def get_categorized_news(self):
+		for news_category,url in NEWS_CATEGORIES.iteritems():
+			self.url = url
+			soup = self.get_soup()
+			categorized_news = soup.findAll('li', {'class':'liHead'})
+			print "Geting %s News" % news_category
+			for news in categorized_news:
+				print build_news_object(news)
 
 
 if __name__ == '__main__':
 	b_url = 'http://banglanews24.com/'
 	BN24 = BanglaNews24(b_url)
-	BN24.get_most_read()
+	BN24.get_categorized_news()
 
