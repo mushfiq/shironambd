@@ -55,11 +55,22 @@ class BanglaNews24(BaseCrawler):
 		best_24_news = best_24_soup.findAll('li')
 		for news in best_24_news:
 			return build_news_object(news) 
+			
+	def get_most_read(self):
+		tabs = self.get_tabs_news()
+		most_read_soup = tabs.find('div', {'id':'tab3'})
+		most_read_news = most_read_soup.findAll('li')
+		if most_read_news:
+			for news in most_read_news:
+				print build_news_object(news)
+		else:
+			return None
+		
 		
 
 
 if __name__ == '__main__':
 	b_url = 'http://banglanews24.com/'
 	BN24 = BanglaNews24(b_url)
-	BN24.get_best24()
+	BN24.get_most_read()
 
