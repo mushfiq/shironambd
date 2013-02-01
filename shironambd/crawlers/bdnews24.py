@@ -10,10 +10,9 @@ Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 import sys
 import os
 
-import setup_django
 from base import BaseCrawler
 from datetime import datetime
-from shironambd.home.models import News
+from utils import build_news_object
 	
 
 BASE_URL = 'http://bdnews24.com/'
@@ -39,11 +38,7 @@ def iter_soup_build_news(soup):
 		news.created_at = datetime.now()
 		yield news
 		
-def build_news_object(soup_news):
-	n = News()
-	n.title = soup_news.find('a').text
-	n.link = soup_news.find('a')['href']
-	return n
+
 
 class BdNews24(BaseCrawler):
 	
