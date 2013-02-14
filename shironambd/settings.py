@@ -1,6 +1,6 @@
 # Django settings for shironambd project.
 import os
-PROJECT_DIR = os.path.abspath('../shironam')
+PROJECT_DIR = os.path.abspath('../shironamhin')
 TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates')
 # PUBLIC_DIR = os.path.join(PROJECT_DIR, 'templates/public')
 from mongoengine import connect
