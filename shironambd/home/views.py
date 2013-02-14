@@ -5,14 +5,13 @@ import datetime
 from shironambd.home.models import News
 
 def index(request):
-	all_news = News.objects.all()
-
+	all_news = News.objects.all()[:20]
 	template = get_template('index.html')
 	context = RequestContext(request, 
-			{'current_date': datetime.datetime.now(), 'all_news':all_news }
+			{'all_news':all_news }
 		)
 	html = template.render(context)
-	
+
 	return HttpResponse(html)
-	
-	
+
+

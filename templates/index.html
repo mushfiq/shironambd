@@ -2,13 +2,11 @@
 {% block content %}
 	<div class="news">
 		<ul>
+			{% for news in all_news %}
 			<li>
-				{% for news in all_news %}
-				<h3><a href="{{ news.link }}">	{{ news.title }}</a></h3>
-					<br/ >{{ news.source.name }}
-					{{ current_date }}
-				{% endfor %}
+				<div class="news-title"><a href="{{ news.link }}">	{{ news.title }}</a>-{{ news.published_at }}</div>	
 			</li>
+			{% endfor %}
 		</ul>
 	</div>
 {% endblock %}
