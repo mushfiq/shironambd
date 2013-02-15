@@ -26,9 +26,9 @@ def crawl_bdnews24():
 def crawl_banglanews24():
 	bUrl = 'http://banglanews24.com/'
 	bn24 = BanglaNews24(bUrl)
-	# bn24.get_lead_news()
-	# bn24.get_latest_news()
-	# bn24.get_categorized_news()
+	bn24.get_lead_news()
+	bn24.get_latest_news()
+	bn24.get_categorized_news()
 	bn24.get_best24()
 	bn24.get_most_read()
 	
@@ -36,6 +36,6 @@ def crawl_banglanews24():
 
 
 if __name__ == '__main__':
-	# crawl_bdnews24()
+	crawl_bdnews24()
 	crawl_banglanews24()
 
