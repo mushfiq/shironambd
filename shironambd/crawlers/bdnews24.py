@@ -43,24 +43,13 @@ def iter_soup_build_news(soup):
 class BdNews24(BaseCrawler):
 	
 	def __inti__(self):
-		self.get_lead_news()
+		print "Called!"
 		self.get_lead_news()
 		self.get_latest_news()
 		self.get_most_read()
 		self.get_recent_stories()
 		self.get_categorized_news()
 		
-		
-	def do_save(self, news_object, tags=None, category=None):
-		if tags != None:
-			news_object.tags = tags
-		if category != None:
-			news_object.category = category
-		try:
-			print news_object
-			news_object.save()
-		except Exception, e:
-			print "Error Occured! %s" % e
 		
 	def get_tab_soup(self):
 		soup = self.get_soup()
@@ -78,6 +67,7 @@ class BdNews24(BaseCrawler):
 				yield build_news_object(news)
 		
 	def get_latest_news(self):
+		print "Getting Latest News"
 		soup = self.get_soup()
 		latests_soup = soup.find('div',{'id':'latest_news2'})
 		latest_newses = latests_soup.findAll('li')
@@ -102,10 +92,3 @@ class BdNews24(BaseCrawler):
 			print 'GETTING ...%s NEWS' % category
 			for news in self.get_lead_news(is_categorized=True):
 				self.do_save(news, tags="test", category=category)
-		
-
-if __name__ == '__main__':
-	bUrl = 'http://bangla.bdnews24.com/'
-	bdN = BdNews24(bUrl)
-	bdN.get_recent_stories()
-

@@ -13,13 +13,17 @@ import os
 from bdnews24 import BdNews24
 
 
-def main():
+def crawl_bdnews24():
 	bUrl = 'http://bangla.bdnews24.com/'
-	bdnews = BdNews24(bUrl)
+	bdN = BdNews24(bUrl)
+	bdN.get_lead_news()
+	bdN.get_latest_news()
+	bdN.get_most_read()
+	bdN.get_recent_stories()
+	bdN.get_categorized_news()
 	
-	pass
 
 
 if __name__ == '__main__':
-	main()
+	crawl_bdnews24()
 

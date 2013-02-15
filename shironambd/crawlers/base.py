@@ -11,6 +11,7 @@ import sys
 import os
 import requests
 from BeautifulSoup import BeautifulSoup
+from utils import is_valid
 
 class BaseCrawler(object):
 	
@@ -27,7 +28,20 @@ class BaseCrawler(object):
 			return soup
 		return None
 		
-			
+	def do_save(self, news_object, tags=None, category=None):
+		if tags != None:
+			news_object.tags = tags
+		if category != None:
+			news_object.category = category
+		try:
+			if is_valid(news_object):
+				print news_object.link
+				news_object.save()
+			else:
+				print "Alread exits!"
+		except Exception, e:
+			# import pdb;pdb.set_trace()
+			print "Error Occured! %s" % e
 		
 
 
