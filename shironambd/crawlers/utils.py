@@ -20,5 +20,8 @@ def build_news_object(soup_news):
 	n.link = soup_news.find('a')['href']
 	return n
 
-
+def is_valid(news_obj):
+	if len(News.objects.filter(link=news_obj.link)) == 0:
+		return True
+	return False
 

@@ -90,4 +90,3 @@ if __name__ == '__main__':
 	b_url = 'http://banglanews24.com/'
 	BN24 = BanglaNews24(b_url)
 	BN24.get_categorized_news()
-
