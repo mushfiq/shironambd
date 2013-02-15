@@ -3,9 +3,11 @@
 	<div class="news">
 		<ul>
 			{% for news in all_news %}
-			<li>
-				<div class="news-title"><a href="{{ news.link }}">	{{ news.title }}</a>-{{ news.published_at }}</div>	
-			</li>
+				{% if news.title|length > 1 %}
+				<li>
+					<div class="news-title"><a href="{{ news.link }}">	{{ news.title }}</a>-{{ news.published_at }}</div>	
+				</li>
+				{% endif %}
 			{% endfor %}
 		</ul>
 	</div>
