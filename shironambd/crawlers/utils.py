@@ -12,6 +12,7 @@ import os
 
 import setup_django
 from shironambd.home.models import News
+# from banglanews24 import BASE_URL
 
 
 def build_news_object(soup_news):
@@ -21,7 +22,8 @@ def build_news_object(soup_news):
 	return n
 
 def is_valid(news_obj):
-	if len(News.objects.filter(link=news_obj.link)) == 0:
-		return True
+	if (len(News.objects.filter(link=news_obj.link))  == 0) and \
+		len(news_obj.title) > 0:
+			return True
 	return False
 

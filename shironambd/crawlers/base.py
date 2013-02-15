@@ -35,13 +35,14 @@ class BaseCrawler(object):
 			news_object.category = category
 		try:
 			if is_valid(news_object):
-				print news_object.link
 				news_object.save()
 			else:
-				print "Alread exits!"
+				pass
+				# print "Alread exits!"
 		except Exception, e:
 			# import pdb;pdb.set_trace()
 			print "Error Occured! %s" % e
+			pass
 		
 
 
