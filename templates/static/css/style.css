@@ -13,3 +13,16 @@ a{
 	font-size: 20px;
 	text-decoration: none;
 }
+#main-content{
+	background-color:#99F09C;
+	margin-left:8%;
+	margin-right: 8%;
+}
+
+.common{
+	margin-left:8%;
+	margin-right:8%;
+}
+#footer-menu{
+	height:120px;
+}
