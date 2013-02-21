@@ -1,0 +1,6 @@
+BROKER_URL = "mongodb://localhost:27017/sbd_broker"
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Dacca'
+CELERY_ENABLE_UTC = True
+CELERY_IMPORTS=("tasks",)
