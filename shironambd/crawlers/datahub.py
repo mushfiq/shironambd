@@ -12,6 +12,9 @@ import os
 
 from bdnews24 import BdNews24
 from banglanews24 import BanglaNews24
+from celery.decorators import periodic_task
+from datetime import timedelta
+from celery import task
 
 
 def crawl_bdnews24():
@@ -22,6 +25,13 @@ def crawl_bdnews24():
 	bdN.get_most_read()
 	bdN.get_recent_stories()
 	bdN.get_categorized_news()
+
+@periodic_task(run_every=timedelta(seconds=5))	
+def crawl_bdnews_latest_news():
+	bUrl = 'http://bangla.bdnews24.com/'
+	bdN = BdNews24(bUrl)
+	bdN.get_latest_news()
+	
 
 def crawl_banglanews24():
 	bUrl = 'http://banglanews24.com/'
@@ -36,6 +46,7 @@ def crawl_banglanews24():
 
 
 if __name__ == '__main__':
-	crawl_bdnews24()
-	crawl_banglanews24()
+	# crawl_bdnews24()
+	# crawl_banglanews24()
+	crawl_bdnews_latest_news()
 
