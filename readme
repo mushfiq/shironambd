@@ -1,2 +1,7 @@
-shiromandb is web application based on python based projects.
-It will crawl data from all bangladeshi news websites a single page news system.
+shiromanbd is web application based on python.
+It crawls bangla news papers and provide latest news link in a single interface.
+
+Technology:
+Django
+Celery
+MongoDB
