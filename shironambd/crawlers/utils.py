@@ -24,6 +24,6 @@ def build_news_object(soup_news):
 def is_valid(news_obj):
 	if (len(News.objects.filter(link=news_obj.link))  == 0) and \
 		len(news_obj.title) > 0:
-			return True
-	return False
+			return False
+	return True
 
