@@ -14,6 +14,7 @@ import setup_django
 from shironambd.home.models import News
 from bdnews24 import BdNews24
 from banglanews24 import BanglaNews24
+from django.core.exceptions import MultipleObjectsReturned
 
 
 
@@ -43,19 +44,19 @@ def crawl_banglanews24():
 
 def remove_duplicates():
 	all_news_links = News.objects.values_list('link')
-	distinct_links = set(all_news_links)
-	duplicate_links = []
-	for link in distinct_links:
-		if len(News.objects.filter(link=link)) != 1:
-			duplicate_links.append(link)
-	print len(duplicate_links)
-	for link in duplicate_links:
-		if len(News.objects.filter(link=link)) > 1:
-			# News.objects.filter(link=link)[0].delete()
-			print News.objects.filter(link=link)
-
-			
-
+	counter = 0
+	for link in all_news_links:
+		try:
+			News.objects.get(link=link)
+		except News.MultipleObjectsReturned:
+			dup = News.objects.filter(link=link)
+			dup[0].delete()
+			counter+=1
+		
+	print "Total %d news deleted!" % counter
+	
+	return 
+	
 if __name__ == '__main__':
 	# crawl_bdnews24()
 	# crawl_banglanews24()
