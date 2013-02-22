@@ -1,5 +1,5 @@
-shiromanbd is web application based on python.
-It crawls bangla news papers and provide latest news link in a single interface.
+Shironambd is a single page web application that provides latest Bangla news from multiple News
+Sources in a single page.
 
 Technology:
 Django
