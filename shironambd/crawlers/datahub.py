@@ -60,6 +60,6 @@ def remove_duplicates():
 if __name__ == '__main__':
 	# crawl_bdnews24()
 	# crawl_banglanews24()
-	# crawl_bdnews_latest_news()
-	remove_duplicates()
+	crawl_bdnews_latest_news()
+	# remove_duplicates()
 
