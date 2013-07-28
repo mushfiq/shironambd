@@ -1,3 +1,4 @@
 *.pyc
 *.db
 *.pid
+*.DS_Store
