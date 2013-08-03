@@ -6,7 +6,7 @@ base.py
 Created by Caveman on 2012-12-12.
 Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 """
-
+import logging
 import sys
 import os
 import requests
@@ -36,11 +36,15 @@ class BaseCrawler(object):
 		try:
 			if is_valid(news_object):
 				news_object.save()
+				return True
 			else:
-				pass
+				logging.warn('Already exists!')
+				print "Alread exits!"
+				return False
 				# print "Alread exits!"
 		except Exception, e:
 			# import pdb;pdb.set_trace()
+			logging.error("Error Occured! %s" % e)
 			print "Error Occured! %s" % e
 			pass
 		
