@@ -2,3 +2,4 @@
 *.db
 *.pid
 *.DS_Store
+*.log

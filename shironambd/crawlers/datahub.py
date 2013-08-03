@@ -9,16 +9,21 @@ Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 
 import sys
 import os
+import logging
 
 import setup_django
 from shironambd.home.models import News
 from bdnews24 import BdNews24
 from banglanews24 import BanglaNews24
+from palo import PAlo
 from django.core.exceptions import MultipleObjectsReturned
 
 
-
+def configire_logging():
+	logging.basicConfig(format='%(asctime)s %(message)s',filename='crawler.log',level=logging.DEBUG)
+	
 def crawl_bdnews24():
+	logging.info("started bdnews24 crawling on ")
 	bUrl = 'http://bangla.bdnews24.com/'
 	bdN = BdNews24(bUrl)
 	bdN.get_lead_news()
@@ -26,14 +31,19 @@ def crawl_bdnews24():
 	bdN.get_most_read()
 	bdN.get_recent_stories()
 	bdN.get_categorized_news()
+	looging.info("crawling ended!")
 
 def crawl_bdnews_latest_news():
+	logging.info("started bdnews24 latest crawling on ")
 	bUrl = 'http://bangla.bdnews24.com/'
 	bdN = BdNews24(bUrl)
 	bdN.get_latest_news()
+	looging.info("crawling ended!")
+	
 	
 
 def crawl_banglanews24():
+	logging.info("started banglanews24 crawling on ")
 	bUrl = 'http://banglanews24.com/'
 	bn24 = BanglaNews24(bUrl)
 	bn24.get_lead_news()
@@ -41,6 +51,17 @@ def crawl_banglanews24():
 	bn24.get_categorized_news()
 	bn24.get_best24()
 	bn24.get_most_read()
+	looging.info("crawling ended!")
+	
+	
+def crawl_palo():
+	logging.info("started Prothom ALo crawling.")
+	pUrl = 'http://prothom-alo.com'
+	palo = PAlo(pUrl)
+	palo.get_lead_news()
+	palo.get_featured_news()
+	palo.get_categorized_news()
+	logging.info("crawling ended!")
 
 def remove_duplicates():
 	all_news_links = News.objects.values_list('link')
@@ -59,7 +80,7 @@ def remove_duplicates():
 	
 if __name__ == '__main__':
 	# crawl_bdnews24()
-	# crawl_banglanews24()
-	crawl_bdnews_latest_news()
+	crawl_banglanews24()
+	# crawl_palo()
 	# remove_duplicates()
 
