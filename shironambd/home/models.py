@@ -35,3 +35,5 @@ class News(mongo.Document):
 		'ordering' : ['-published_at']
 	}
 		
+	class Meta:
+		get_latest_by = 'created_at'
