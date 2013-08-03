@@ -63,7 +63,7 @@ def crawl_palo():
 	palo.get_categorized_news()
 	logging.info("crawling ended!")
 
-def remove_duplicates():
+def remove_duplicates_by_link():
 	all_news_links = News.objects.values_list('link')
 	counter = 0
 	for link in all_news_links:
@@ -78,9 +78,25 @@ def remove_duplicates():
 	
 	return 
 	
+def remove_duplicates_by_title():
+	all_news_links = News.objects.values_list('title')
+	counter = 0
+	for title in all_news_links:
+		try:
+			News.objects.get(title=title)
+		except News.MultipleObjectsReturned:
+			dup = News.objects.filter(title=title)
+			dup[0].delete()
+			counter+=1
+		
+	print "Total %d news deleted!" % counter
+	
+	return
+	
 if __name__ == '__main__':
 	# crawl_bdnews24()
-	crawl_banglanews24()
+	# crawl_banglanews24()
+	remove_duplicates_by_title()
 	# crawl_palo()
 	# remove_duplicates()
 
