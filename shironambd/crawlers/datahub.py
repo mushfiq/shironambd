@@ -31,14 +31,14 @@ def crawl_bdnews24():
 	bdN.get_most_read()
 	bdN.get_recent_stories()
 	bdN.get_categorized_news()
-	looging.info("crawling ended!")
+	logging.info("crawling ended!")
 
 def crawl_bdnews_latest_news():
 	logging.info("started bdnews24 latest crawling on ")
 	bUrl = 'http://bangla.bdnews24.com/'
 	bdN = BdNews24(bUrl)
 	bdN.get_latest_news()
-	looging.info("crawling ended!")
+	logging.info("crawling ended!")
 	
 	
 
@@ -51,7 +51,7 @@ def crawl_banglanews24():
 	bn24.get_categorized_news()
 	bn24.get_best24()
 	bn24.get_most_read()
-	looging.info("crawling ended!")
+	logging.info("crawling ended!")
 	
 	
 def crawl_palo():
