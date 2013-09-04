@@ -27,6 +27,8 @@ NEWS_CATEGORIES = ['sports','entertainment','technology','national',
 				'international','lifestyle','economy', 'technology_research', 'art_and_literature']
 				
 LIFESTYLE_SUB_CATEGORIES = ['occupation','travel','advice','recipe','fashion']
+
+SOURCE_NAME = 'ProthomAlo'
 				
 class PAlo(BaseCrawler):
 	
@@ -35,8 +37,9 @@ class PAlo(BaseCrawler):
 		return  self.soup.findAll('h2', {'class':'title'})
 		
 	def process_and_save(self, all_news, tags=None, category=None):
+		print "HERE I AM"
 		for news in all_news:
-			news_object = build_news_object(news)
+			news_object = build_news_object(news, SOURCE_NAME)
 			try:
 				if(self.do_save(news_object, tags=tags, category=category)):
 					print "saved"

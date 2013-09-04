@@ -95,8 +95,9 @@ def remove_duplicates_by_title():
 	
 if __name__ == '__main__':
 	# crawl_bdnews24()
-	# crawl_banglanews24()
-	remove_duplicates_by_title()
+	crawl_banglanews24()
+	# remove_duplicates_by_title()
+	# crawl_bdnews_latest_news()
 	# crawl_palo()
 	# remove_duplicates()
 

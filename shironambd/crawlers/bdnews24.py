@@ -23,6 +23,7 @@ TOTAL_RECENT_STORIES = 7
 NEWS_CATEGORIES = ['health','science','environment',
 				'lifestyle','politics','sport','economy']
 	
+SOURCE_NAME = 'BDNEWS24.COM'
 
 def iter_soup_build_news(soup):
 	for news in soup:
@@ -50,7 +51,6 @@ class BdNews24(BaseCrawler):
 		self.get_recent_stories()
 		self.get_categorized_news()
 		
-		
 	def get_tab_soup(self):
 		soup = self.get_soup()
 		tab_soup = soup.find('div', {'id':'tabs-2'})
@@ -62,9 +62,9 @@ class BdNews24(BaseCrawler):
 		others_lead = coulumns[1].findAll('h3')
 		for news in others_lead:
 			if is_categorized != True:
-				self.do_save(build_news_object(news), ['lead_news'])
+				self.do_save(build_news_object(news, SOURCE_NAME), ['lead_news'])
 			else:
-				yield build_news_object(news)
+				yield build_news_object(news, SOURCE_NAME)
 		
 	def get_latest_news(self):
 		print "Getting Latest News"
@@ -72,23 +72,23 @@ class BdNews24(BaseCrawler):
 		latests_soup = soup.find('div',{'id':'latest_news2'})
 		latest_newses = latests_soup.findAll('li')
 		for news in latest_newses:
-			self.do_save(build_news_object(news), ['latest_news'])
+			self.do_save(build_news_object(news, SOURCE_NAME), ['latest_news'])
 					
 	def get_most_read(self):
 		tab_soup = self.get_tab_soup()
 		raw_newses_titles = tab_soup.findAll('li')[3:TOTAL_MOST_READ+3]
 		for news in raw_newses_titles:
-			self.do_save(build_news_object(news), ['most_read'])
+			self.do_save(build_news_object(news, SOURCE_NAME), ['most_read'])
 
 	def get_recent_stories(self):
 		tab_soup = self.get_tab_soup()
 		raw_newses_titles = tab_soup.findAll('li')[TOTAL_MOST_READ+3:]
 		for news in raw_newses_titles:
-			self.do_save(build_news_object(news), ['recent_stories'])
+			self.do_save(build_news_object(news, SOURCE_NAME), ['recent_stories'])
 		
 	def get_categorized_news(self):
 		for category in NEWS_CATEGORIES:
 			self.url = BASE_URL+category 
 			print 'GETTING ...%s NEWS' % category
 			for news in self.get_lead_news(is_categorized=True):
-				self.do_save(news, tags="test", category=category)
+				self.do_save(news, category=category)
