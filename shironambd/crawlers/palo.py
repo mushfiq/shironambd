@@ -9,7 +9,7 @@ Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 """
 import logging
 
-logging.basicConfig(format='%(asctime)s %(message)s',filename='crawler.log',level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s',filename='logs/crawler.log',level=logging.DEBUG)
 
 from pyquery import PyQuery as pq
 from BeautifulSoup import BeautifulSoup
@@ -34,7 +34,10 @@ class PAlo(BaseCrawler):
 	
 	
 	def soup_to_news(self):
-		return  self.soup.findAll('h2', {'class':'title'})
+		soup = self.get_soup()
+		if soup != None:
+			return  soup.findAll('h2', {'class':'title'})
+		return None
 		
 	def process_and_save(self, all_news, tags=None, category=None):
 		print "HERE I AM"
@@ -66,9 +69,10 @@ class PAlo(BaseCrawler):
 		for category in NEWS_CATEGORIES:
 			if category != 'lifestyle':
 				self.url = BASE_URL+'/'+category
-				soup = self.soup
+				# soup = self.get_soup()
 				all_news = self.soup_to_news()
-				self.process_and_save(all_news, category=category)
+				if all_news != None:
+					self.process_and_save(all_news, category=category)
 			else:
 				for sub_life_style in LIFESTYLE_SUB_CATEGORIES:
 					self.url = BASE_URL+'/lifestyle_'+sub_life_style
