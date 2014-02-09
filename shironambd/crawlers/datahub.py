@@ -20,7 +20,7 @@ from django.core.exceptions import MultipleObjectsReturned
 
 
 def configire_logging():
-	logging.basicConfig(format='%(asctime)s %(message)s',filename='crawler.log',level=logging.DEBUG)
+	logging.basicConfig(format='%(asctime)s %(message)s',filename='logs/crawler.log',level=logging.DEBUG)
 	
 def crawl_bdnews24():
 	logging.info("started bdnews24 crawling on ")
@@ -31,14 +31,14 @@ def crawl_bdnews24():
 	bdN.get_most_read()
 	bdN.get_recent_stories()
 	bdN.get_categorized_news()
-	looging.info("crawling ended!")
+	logging.info("crawling ended!")
 
 def crawl_bdnews_latest_news():
 	logging.info("started bdnews24 latest crawling on ")
 	bUrl = 'http://bangla.bdnews24.com/'
 	bdN = BdNews24(bUrl)
 	bdN.get_latest_news()
-	looging.info("crawling ended!")
+	logging.info("crawling ended!")
 	
 	
 
@@ -49,17 +49,18 @@ def crawl_banglanews24():
 	bn24.get_lead_news()
 	bn24.get_latest_news()
 	bn24.get_categorized_news()
+	#check next two methods for dom scraping!
 	bn24.get_best24()
 	bn24.get_most_read()
-	looging.info("crawling ended!")
+	logging.info("crawling ended!")
 	
 	
 def crawl_palo():
 	logging.info("started Prothom ALo crawling.")
 	pUrl = 'http://prothom-alo.com'
 	palo = PAlo(pUrl)
-	palo.get_lead_news()
-	palo.get_featured_news()
+	# palo.get_lead_news()
+	# palo.get_featured_news()
 	palo.get_categorized_news()
 	logging.info("crawling ended!")
 
@@ -96,7 +97,8 @@ def remove_duplicates_by_title():
 if __name__ == '__main__':
 	# crawl_bdnews24()
 	# crawl_banglanews24()
-	remove_duplicates_by_title()
-	# crawl_palo()
+	# remove_duplicates_by_title()
+	# crawl_bdnews_latest_news()
+	crawl_palo()
 	# remove_duplicates()
 

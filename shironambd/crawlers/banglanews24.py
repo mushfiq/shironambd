@@ -27,6 +27,8 @@ NEWS_CATEGORIES = {
 'ecoomy':'http://www.banglanews24.com/categorizednews.php?newtype=2'
 }
 
+SOURCE_NAME = 'BanglaNews24.com'
+
 def clean_text(text):
 	return text.replace('&nbsp;', '')
 	
@@ -39,7 +41,8 @@ class BanglaNews24(BaseCrawler):
 		return soup.find('div', {'class':'D01Tabs'})
 	
 	def process_and_save(self, news):
-		news_object = build_news_object(news)
+		
+		news_object = build_news_object(news, SOURCE_NAME)
 		if is_valid(news_object):
 			news_object.link = BASE_URL+str(news_object.link)
 			# print news_object

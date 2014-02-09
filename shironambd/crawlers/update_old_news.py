@@ -15,10 +15,14 @@ def update_source():
 	
 	all_news = News.objects.all()
 	for news in all_news:
+		i = 0
 		if news.link.find(SOURCE_URLS[1]) > -1:
+			i+=1
+			# print news
 			news.source = BDNEWS
-			news.save()
-			print "updated!!"
+			# news.save()
+			
+	print "Total %d news updated!!" %i
 		
 		
 		

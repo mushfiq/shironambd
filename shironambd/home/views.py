@@ -12,9 +12,9 @@ def index(request):
 	palo = Source.objects.get(name='ProthomAlo')
 	bdnews  = Source.objects.get(name='BDNEWS24.COM')
 	banglanews = Source.objects.get(name='BanglaNews24.com')
-	palo_news = News.objects.filter(source=palo)[:10]
-	bdnews = News.objects.filter(source=bdnews)[:10]
-	bangla_news = News.objects.filter(source=banglanews)[:10]
+	palo_news = News.objects.filter(source=palo)[:5]
+	bdnews = News.objects.filter(source=bdnews)[:5]
+	bangla_news = News.objects.filter(source=banglanews)[:5]
 	all_news = list(chain(palo_news, bdnews, bangla_news))
 	shuffle(all_news)
 	template = get_template('index.html')
