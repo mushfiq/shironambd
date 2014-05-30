@@ -13,31 +13,36 @@ import os
 from base import BaseCrawler
 from datetime import datetime
 from utils import build_news_object
-	
 
-BASE_URL = 'http://bdnews24.com/'
+import setup_django
+from shironambd.home.models import News
+
+BASE_URL = 'http://bdnews24.com/bangla'
 TOTAL_MOST_READ = 7
 TOTAL_RECENT_STORIES = 7
 
 
 NEWS_CATEGORIES = ['health','science','environment',
 				'lifestyle','politics','sport','economy']
-	
+
 SOURCE_NAME = 'BDNEWS24.COM'
 
 def iter_soup_build_news(soup):
-	for news in soup:
-		try:
-			link = news.find('a')['href']
-		except TypeError:
-			link = news['href']
-		title = news.text.replace('&#39;', "'")
-		news = News()
-		news.link = link
-		news.title = title
-		# news.published_at ?? 
-		news.created_at = datetime.now()
-		yield news
+	# import pdb;pdb.set_trace();
+	try:
+		link = soup.find('a')['href']
+	except TypeError:
+		link = soup['href']
+
+	title = soup.text.replace('&#39;', "'")
+
+	news = News()
+	news.link = link
+	news.title = title
+	# news.published_at ??
+	news.created_at = datetime.now()
+	# print news
+	return news
 		
 
 
@@ -67,12 +72,13 @@ class BdNews24(BaseCrawler):
 				yield build_news_object(news, SOURCE_NAME)
 		
 	def get_latest_news(self):
-		print "Getting Latest News"
 		soup = self.get_soup()
-		latests_soup = soup.find('div',{'id':'latest_news2'})
+		latest_news_class = 'x340x230x240x170 '
+		latests_soup = soup.find('div',{'class':latest_news_class})
 		latest_newses = latests_soup.findAll('li')
 		for news in latest_newses:
-			self.do_save(build_news_object(news, SOURCE_NAME), ['latest_news'])
+
+			self.do_save(iter_soup_build_news(news), ['latest_news'])
 					
 	def get_most_read(self):
 		tab_soup = self.get_tab_soup()
