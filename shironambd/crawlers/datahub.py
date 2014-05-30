@@ -59,9 +59,9 @@ def crawl_palo():
 	logging.info("started Prothom ALo crawling.")
 	pUrl = 'http://prothom-alo.com'
 	palo = PAlo(pUrl)
-	# palo.get_lead_news()
+	palo.get_lead_news()
 	# palo.get_featured_news()
-	palo.get_categorized_news()
+	# palo.get_categorized_news()
 	logging.info("crawling ended!")
 
 def remove_duplicates_by_link():
