@@ -39,9 +39,7 @@ class BaseCrawler(object):
 				return True
 			else:
 				logging.warn('Already exists!')
-				print "Alread exits!"
 				return False
-				# print "Alread exits!"
 		except Exception, e:
 			# import pdb;pdb.set_trace()
 			logging.error("Error Occured! %s" % e)
