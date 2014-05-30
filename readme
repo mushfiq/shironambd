@@ -1,5 +1,7 @@
 Shironambd is a single page web application that provides latest Bangla news from multiple News Sources.
 
+Beta version is live on http://shironambd.com
+
 Technology:
 Django
 Celery
