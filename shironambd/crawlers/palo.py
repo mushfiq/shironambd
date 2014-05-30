@@ -36,11 +36,11 @@ class PAlo(BaseCrawler):
 	def soup_to_news(self):
 		soup = self.get_soup()
 		if soup != None:
-			return  soup.findAll('h2', {'class':'title'})
+			# return  soup.findAll('h2', {'class':'title'})
+			return soup.findAll('div', {'class':'each_news mb20'})
 		return None
 		
 	def process_and_save(self, all_news, tags=None, category=None):
-		print "HERE I AM"
 		for news in all_news:
 			news_object = build_news_object(news, SOURCE_NAME)
 			try:
@@ -50,7 +50,6 @@ class PAlo(BaseCrawler):
 				logging.error("Error Ocurred! %s" %e)
 				print "Error",e
 				pass
-			# print title.text_content().encode('utf-8')
 	def get_lead_news(self):
 		soup = self.get_soup()
 		for div_id in LEAD_NEWS_DIV_IDS:
