@@ -16,8 +16,8 @@ from utils import is_valid
 
 class BaseCrawler(object):
 	
-    def __init__(self, url):
-    	self.url = url
+	def __init__(self, url):
+		self.url = url
 		
     def get_response(self):
     	response = requests.get(self.url)
