@@ -12,18 +12,14 @@ from utils import get_latest_x_news
 
 def index(request):
     palo = Source.objects.get(name='ProthomAlo')
-    # bdnews  = Source.objects.get(name='BDNEWS24.COM')
-    # banglanews = Source.objects.get(name='BanglaNews24.com')
-    # all_news = list(chain(palo_news, bdnews, bangla_news))
-    # shuffle(all_news)
+    bdnews  = Source.objects.get(name='BDNEWS24.COM')
     palo_news = News.objects.filter(source=palo).order_by('-created_at')
-
-
+    bdnews = News.objects.filter(source=bdnews).order_by('-published_at')
+    all_news = list(chain(palo_news, bdnews))
     template = get_template('index.html')
     context = RequestContext(request, 
-    {'all_news':palo_news }
+    {'all_news':all_news }
     )
-    # print 'Total news', len(all_news)
     html = template.render(context)
 
     return HttpResponse(html)
