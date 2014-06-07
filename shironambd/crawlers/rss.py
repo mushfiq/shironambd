@@ -53,9 +53,9 @@ class RSSCrawler(BaseCrawler):
             try:
                 news.link = entry.guid
                 news.source = self.source
-                news.title  = entry.title
-                news.author = entry.has_key(entry.authorname) if entry.authorname else None
-                news.published_at = entry.has_key(published) if clean_date(entry.published) else None
+                news.title  = self.get_link(entry)
+                news.author = self.get_author(entry)
+                news.published_at = self.get_published_at(entry)
                 self.do_save(news)
             except Exception as e:
                 print "Error Occured!", e
