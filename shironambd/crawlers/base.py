@@ -11,17 +11,26 @@ import sys
 import os
 import requests
 from BeautifulSoup import BeautifulSoup
+import feedparser
 from utils import is_valid
 
 class BaseCrawler(object):
 	
-	def __init__(self, url):
-		self.url = url
+    def __init__(self, url):
+    	self.url = url
 		
-	def get_response(self):
-		response = requests.get(self.url)
-		return response
-	
+    def get_response(self):
+    	response = requests.get(self.url)
+    	return response
+    
+    def get_entries(self):
+        try:
+            feed = feedparser.parse(self.url)
+            return feed.entries
+        except Exception, e:
+            print e
+            pass
+            
 	def get_soup(self):
 		if self.get_response().status_code == 200:
 			soup = BeautifulSoup(self.get_response().content)
