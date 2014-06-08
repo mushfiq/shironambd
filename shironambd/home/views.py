@@ -1,12 +1,16 @@
 from itertools import chain
 from random import shuffle
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.template.loader import get_template
+from django.shortcuts import render
 import datetime
 from shironambd.home.models import News, Source
 
 from utils import get_latest_x_news
+from django.core.mail import send_mail
+
+from forms import ContactUsForm
 
 
 
@@ -36,8 +40,15 @@ def aboutus(request):
     return HttpResponse(html)
     
 def contactus(request):
-    return HttpResponse('contact-us')
+    template = get_template('contact-us.html')
+    context = RequestContext(request)
+    html = template.render(context)
+    return HttpResponse(html)
+    
     
     
 def legal(request):
     return HttpResponse('legal')
+    
+def success(request):
+    return HttpResponse('Message Successfully Sent!')
