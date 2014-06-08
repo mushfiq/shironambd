@@ -16,8 +16,8 @@ from utils import is_valid
 
 class BaseCrawler(object):
 	
-	def __init__(self, url):
-		self.url = url
+    def __init__(self, url):
+    	self.url = url
 		
     def get_response(self):
     	response = requests.get(self.url)
@@ -30,30 +30,30 @@ class BaseCrawler(object):
         except Exception, e:
             print e
             pass
-            
-	def get_soup(self):
-		if self.get_response().status_code == 200:
-			soup = BeautifulSoup(self.get_response().content)
-			return soup
-		return None
+        
+    def get_soup(self):
+    	if self.get_response().status_code == 200:
+    		soup = BeautifulSoup(self.get_response().content)
+    		return soup
+    	return None
 		
-	def do_save(self, news_object, tags=None, category=None):
-		if tags != None:
-			news_object.tags = tags
-		if category != None:
-			news_object.category = category
-		try:
-			if is_valid(news_object):
-				news_object.save()
-				return True
-			else:
-				logging.warn('Already exists!')
-				return False
-		except Exception, e:
-			# import pdb;pdb.set_trace()
-			logging.error("Error Occured! %s" % e)
-			print "Error Occured! %s" % e
-			pass
+    def do_save(self, news_object, tags=None, category=None):
+    	if tags != None:
+    		news_object.tags = tags
+    	if category != None:
+    		news_object.category = category
+    	try:
+    		if is_valid(news_object):
+    			news_object.save()
+    			return True
+    		else:
+    			logging.warn('Already exists!')
+    			return False
+    	except Exception, e:
+    		# import pdb;pdb.set_trace()
+    		logging.error("Error Occured! %s" % e)
+    		print "Error Occured! %s" % e
+    		pass
 		
 
 
