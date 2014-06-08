@@ -1,14 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="news">
-		<ul>
+	<div class="news" style="width:400px; float:left">
+		<ul> BDNEWS24.COM
 			{% for news in all_news %}
-				{% if news.title|length > 1 %}
-				<li>
-					<div class="news-title"><a target="_blank" href="{{ news.link }}">	{{ news.title }}</a>-{{news.source.name}}-{{ news.published_at }}</div>	
-				</li>
+				{% if news.title|length > 1 and news.source.name == "bdnews24" %}
+					<li>
+						<div class="news-title"><a target="_blank" href="{{ news.link }}">	{{ news.title }}</a></div>	
+					</li>
 				{% endif %}
 			{% endfor %}
 		</ul>
 	</div>
+	<div class="news" style="width:400px; float:right">
+		<ul> JUGANTOR.COM
+			{% for news in all_news %}
+				{% if news.title|length > 1 and news.source.name == "ProthomAlo" %}
+				<li>
+					<div class="news-title"><a target="_blank" href="{{ news.link }}">	{{ news.title }}</a></div>	
+				</li>
+				<!-- -{{news.source.name}}-{{ news.published_at }} -->
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+	<div style="clear;"></div>
+	<div class="news" style="width:400px; float:right">
+		<ul> PROTHOM-ALO.COM
+			{% for news in all_news %}
+				{% if news.title|length > 1 and news.source.name == "jugantor" %}
+				<li>
+					<div class="news-title"><a target="_blank" href="{{ news.link }}">{{ news.title }}</a></div>	
+				</li>
+				<!-- -{{news.source.name}}-{{ news.published_at }} -->
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+	
 {% endblock %}
