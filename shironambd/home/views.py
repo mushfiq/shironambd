@@ -11,11 +11,15 @@ from utils import get_latest_x_news
 
 
 def index(request):
-    palo = Source.objects.get(name='ProthomAlo')
-    bdnews  = Source.objects.get(name='BDNEWS24.COM')
-    palo_news = News.objects.filter(source=palo).order_by('-created_at')
-    bdnews = News.objects.filter(source=bdnews).order_by('-published_at')
-    all_news = list(chain(palo_news, bdnews))
+    all_sources = Source.objects.all()
+    all_news = []
+    #TODO:optmiize this code 
+    for source in all_sources:
+        news = News.objects.filter(source=source)
+        if len(news):
+            for n in news:
+                all_news.append(n)
+        
     template = get_template('index.html')
     context = RequestContext(request, 
     {'all_news':all_news }
