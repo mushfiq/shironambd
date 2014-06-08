@@ -99,6 +99,6 @@ if __name__ == '__main__':
 	# crawl_banglanews24()
 	# remove_duplicates_by_title()
 	# crawl_bdnews_latest_news()
-	crawl_palo()
+    crawl_palo()
 	# remove_duplicates()
 
