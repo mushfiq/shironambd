@@ -10,7 +10,7 @@ Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 import sys
 import os
 
-from base import BaseCrawler
+from rss import RSSCrawler
 from datetime import datetime
 from utils import build_news_object
 
@@ -46,55 +46,31 @@ def iter_soup_build_news(soup):
 		
 
 
-class BdNews24(BaseCrawler):
+# class BdNews24(RSSCrawler):
+#     
+#         def get_published_at(self, entry):
+#             pub_str = entry.published[:-6] if entry.has_key('published') else None
+#             published_at = datetime.strptime(pub_str, '%a, %d %b %Y, %H:%M:%S') 
+#             return published_at
+#     
+#         def process(self):
+#             entries = self.get_entries()
+# 
+#             for entry in entries:
+#                 news = News()
+#                 try:
+#                     news.link = entry.guid
+#                     news.source = self.source
+#                     news.title  = self.get_title(entry)
+#                     news.published_at = self.get_published_at(entry)
+#                     self.do_save(news)
+#                 except Exception as e:
+#                     print "Error Occured!", e
+#                     pass
+#             return
+        
+if __name__=='__main__':
+    url = "http://bangla.bdnews24.com/?widgetName=rssfeed&widgetId=1151&getXmlFeed=true"
+    b = RSSCrawler(url)
+    b.process()
 	
-	def __inti__(self):
-		print "Called!"
-		self.get_lead_news()
-		self.get_latest_news()
-		self.get_most_read()
-		self.get_recent_stories()
-		self.get_categorized_news()
-		
-	def get_tab_soup(self):
-		soup = self.get_soup()
-		tab_soup = soup.find('div', {'id':'tabs-2'})
-		return tab_soup
-
-	def get_lead_news(self, is_categorized=False):
-		soup = self.get_soup()
-		coulumns = soup.findAll('div', {'class':'column-1'})
-		others_lead = coulumns[1].findAll('h3')
-		for news in others_lead:
-			if is_categorized != True:
-				self.do_save(build_news_object(news, SOURCE_NAME), ['lead_news'])
-			else:
-				yield build_news_object(news, SOURCE_NAME)
-		
-	def get_latest_news(self):
-		soup = self.get_soup()
-		latest_news_class = 'x340x230x240x170 '
-		latests_soup = soup.find('div',{'class':latest_news_class})
-		latest_newses = latests_soup.findAll('li')
-		for news in latest_newses:
-
-			self.do_save(iter_soup_build_news(news), ['latest_news'])
-					
-	def get_most_read(self):
-		tab_soup = self.get_tab_soup()
-		raw_newses_titles = tab_soup.findAll('li')[3:TOTAL_MOST_READ+3]
-		for news in raw_newses_titles:
-			self.do_save(build_news_object(news, SOURCE_NAME), ['most_read'])
-
-	def get_recent_stories(self):
-		tab_soup = self.get_tab_soup()
-		raw_newses_titles = tab_soup.findAll('li')[TOTAL_MOST_READ+3:]
-		for news in raw_newses_titles:
-			self.do_save(build_news_object(news, SOURCE_NAME), ['recent_stories'])
-		
-	def get_categorized_news(self):
-		for category in NEWS_CATEGORIES:
-			self.url = BASE_URL+category 
-			print 'GETTING ...%s NEWS' % category
-			for news in self.get_lead_news(is_categorized=True):
-				self.do_save(news, category=category)

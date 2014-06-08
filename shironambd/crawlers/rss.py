@@ -40,10 +40,10 @@ class RSSCrawler(BaseCrawler):
         return 
         
     def get_author(self, entry):
-        return entry.has_key(entry.authorname) if entry.authorname else None
+        return entry.authorname
         
     def get_published_at(self, entry):
-        return entry.has_key(entry.published) if clean_date(entry.published) else None
+        return clean_date(entry.published)
 
     def process(self):
     	entries = self.get_entries()
@@ -53,10 +53,11 @@ class RSSCrawler(BaseCrawler):
             try:
                 news.link = entry.guid
                 news.source = self.source
-                news.title  = self.get_link(entry)
+                news.title  = self.get_title(entry)
                 news.author = self.get_author(entry)
                 news.published_at = self.get_published_at(entry)
                 self.do_save(news)
+                # print "goo"
             except Exception as e:
                 print "Error Occured!", e
                 pass
