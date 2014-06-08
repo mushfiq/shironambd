@@ -29,3 +29,15 @@ def index(request):
     return HttpResponse(html)
 
 
+def aboutus(request):
+    template = get_template('about-us.html')
+    context = RequestContext(request)
+    html = template.render(context)
+    return HttpResponse(html)
+    
+def contactus(request):
+    return HttpResponse('contact-us')
+    
+    
+def legal(request):
+    return HttpResponse('legal')

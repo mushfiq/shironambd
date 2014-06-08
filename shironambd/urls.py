@@ -14,7 +14,12 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-	url(r'', 'shironambd.home.views.index')
+	
+    url(r'^about-us', 'shironambd.home.views.aboutus'),
+    url(r'^contact-us', 'shironambd.home.views.contactus'),
+    url(r'legal', 'shironambd.home.views.legal'),
+    url(r'', 'shironambd.home.views.index')
+    
     # url(r'^admin/', include(admin.site.urls)),
 )
 urlpatterns += staticfiles_urlpatterns()
