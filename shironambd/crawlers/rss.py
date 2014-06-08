@@ -21,7 +21,7 @@ def clean_date(date_string):
     date_string = date_string.replace('.0', '')
     date_obj = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S") 
     return date_obj
-    
+
 
 
 class RSSCrawler(BaseCrawler):
@@ -43,7 +43,7 @@ class RSSCrawler(BaseCrawler):
         return entry.has_key(entry.authorname) if entry.authorname else None
         
     def get_published_at(self, entry):
-        return entry.has_key(published) if clean_date(entry.published) else None
+        return entry.has_key(entry.published) if clean_date(entry.published) else None
 
     def process(self):
     	entries = self.get_entries()
@@ -65,8 +65,8 @@ class RSSCrawler(BaseCrawler):
 
 if __name__=='__main__':
     # s = Source.objects.get(urls="http://bangla.bdnews24.com/?widgetName=rssfeed&widgetId=1151&getXmlFeed=true")
-    # url = "http://bangla.bdnews24.com/?widgetName=rssfeed&widgetId=1151&getXmlFeed=true"
-    url = "http://www.jugantor.com/rss.xml"
+    url = "http://bangla.bdnews24.com/?widgetName=rssfeed&widgetId=1151&getXmlFeed=true"
+    # url = "http://www.jugantor.com/rss.xml"
     r = RSSCrawler(url)
-    r.get_all_news()
+    r.process()
     # print r
