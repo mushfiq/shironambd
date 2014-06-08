@@ -19,7 +19,7 @@ class Source(mongo.Document):
 class News(mongo.Document):
     title = mongo.StringField(required=True)
     source = mongo.ReferenceField(Source)
-    author = mongo.StringField(default=False)
+    author = mongo.StringField(default=None)
     published_at = mongo.DateTimeField(default=datetime.now())
     created_at = mongo.DateTimeField(default=datetime.now())
     link = mongo.URLField(required=True)
