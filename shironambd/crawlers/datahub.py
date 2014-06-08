@@ -12,26 +12,43 @@ import os
 import logging
 
 import setup_django
-from shironambd.home.models import News
-from bdnews24 import BdNews24
+from shironambd.home.models import News, Source
+# from bdnews24 import BdNews24
 from banglanews24 import BanglaNews24
+from jugantor import JugnatorCrawler
 from palo import PAlo
 from django.core.exceptions import MultipleObjectsReturned
 
+from jugantor import JugnatorCrawler
+from rss import RSSCrawler
 
 def configire_logging():
 	logging.basicConfig(format='%(asctime)s %(message)s',filename='logs/crawler.log',level=logging.DEBUG)
-	
-def crawl_bdnews24():
-	logging.info("started bdnews24 crawling on ")
-	bUrl = 'http://bangla.bdnews24.com/'
-	bdN = BdNews24(bUrl)
-	bdN.get_lead_news()
-	bdN.get_latest_news()
-	bdN.get_most_read()
-	bdN.get_recent_stories()
-	bdN.get_categorized_news()
-	logging.info("crawling ended!")
+	    
+def crawl_jugantor():
+    logging.info("started crawling jugantor")
+    
+    source = Source.objects.get(name="jugantor")
+    urls = source.urls
+    for url in urls:
+        jugantor = JugnatorCrawler(url)
+        jugantor.process()
+    
+    logging.info("ended crawling jugantor")
+    
+        
+def crawl_bdnews():
+    logging.info("started crawling bdnews24")
+    
+    source = Source.objects.get(name="bdnews24")
+    urls = source.urls
+    for url in urls:
+        rss = RSSCrawler(url)
+        rss.process()
+
+    logging.info("ended crawling bdnews24")
+
+
 
 def crawl_bdnews_latest_news():
 	logging.info("started bdnews24 latest crawling on ")
@@ -99,6 +116,8 @@ if __name__ == '__main__':
 	# crawl_banglanews24()
 	# remove_duplicates_by_title()
 	# crawl_bdnews_latest_news()
-    crawl_palo()
+    # crawl_palo()
+    # crawl_bdnews()
+    crawl_jugantor()
 	# remove_duplicates()
 
