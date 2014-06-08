@@ -73,13 +73,13 @@ def crawl_banglanews24():
 	
 	
 def crawl_palo():
-	logging.info("started Prothom ALo crawling.")
-	pUrl = 'http://prothom-alo.com'
-	palo = PAlo(pUrl)
-	palo.get_lead_news()
-	# palo.get_featured_news()
-	# palo.get_categorized_news()
-	logging.info("crawling ended!")
+    logging.info("started Prothom ALo crawling.")
+    pUrl = 'http://prothom-alo.com'
+    palo = PAlo(pUrl)
+    palo.get_lead_news()
+    palo.get_featured_news()
+    palo.get_categorized_news()
+    logging.info("crawling ended!")
 
 def remove_duplicates_by_link():
 	all_news_links = News.objects.values_list('link')
@@ -112,12 +112,7 @@ def remove_duplicates_by_title():
 	return
 	
 if __name__ == '__main__':
-	# crawl_bdnews24()
-	# crawl_banglanews24()
-	# remove_duplicates_by_title()
-	# crawl_bdnews_latest_news()
-    # crawl_palo()
-    # crawl_bdnews()
+    crawl_palo()
+    crawl_bdnews()
     crawl_jugantor()
-	# remove_duplicates()
 
