@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="news" style="width:400px; float:left">
-		<ul> BDNEWS24.COM
+		<ul> <img src="{{ STATIC_URL }}logos/bdnews24.png" class="logo"></img>
 			{% for news in all_news %}
 				{% if news.title|length > 1 and news.source.name == "bdnews24" %}
 					<li>
@@ -11,8 +11,8 @@
 			{% endfor %}
 		</ul>
 	</div>
-	<div class="news" style="width:400px; float:right">
-		<ul> JUGANTOR.COM
+	<div class="news" style="width:400px; float:left">
+		<ul> <img src="{{ STATIC_URL }}logos/palo.gif" class="logo"></img>
 			{% for news in all_news %}
 				{% if news.title|length > 1 and news.source.name == "ProthomAlo" %}
 				<li>
@@ -25,7 +25,7 @@
 	</div>
 	<div style="clear;"></div>
 	<div class="news" style="width:400px; float:right">
-		<ul> PROTHOM-ALO.COM
+		<ul> <img src="{{ STATIC_URL }}logos/jugantor.gif" class="logo"></img>
 			{% for news in all_news %}
 				{% if news.title|length > 1 and news.source.name == "jugantor" %}
 				<li>
@@ -36,5 +36,6 @@
 			{% endfor %}
 		</ul>
 	</div>
+	<div style="clear;"></div>
 	
 {% endblock %}

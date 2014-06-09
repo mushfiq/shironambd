@@ -19,7 +19,7 @@ def index(request):
     all_news = []
     #TODO:optmiize this code 
     for source in all_sources:
-        news = News.objects.filter(source=source)[:10]
+        news = News.objects.filter(source=source)[:20]
         if len(news):
             for n in news:
                 all_news.append(n)
