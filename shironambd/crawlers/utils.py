@@ -12,19 +12,21 @@ import os
 
 import setup_django
 from shironambd.home.models import News, Source
-# from banglanews24 import BASE_URL
-
 
 def build_news_object(soup_news, source_name):
-	# import pdb;pdb.set_trace()
+    s = soup_news.find('h2', {'class':'title'})
+    source_object = Source.objects.get(name=source_name)
+    n = News()
+    n.title = s.find('a').text
+    n.source = source_object
+    ref = s.find('a')['href']
+    if ref.find('http') == -1:
+        n.link = source_object.website+'/'+ref
+    else:    
+        n.link = s.find('a')['href']
+        print n.link
 
-	s = soup_news.find('h2', {'class':'title'})
-	source_object = Source.objects.get(name=source_name)
-	n = News()
-	n.title = s.find('a').text
-	n.link = s.find('a')['href']
-	n.source = source_object
-	return n
+    return n
 
 def is_valid(news_obj):
 	if (len(News.objects.filter(link=news_obj.link))  > 0):
