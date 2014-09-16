@@ -112,6 +112,7 @@ def remove_duplicates_by_title():
 	return
 	
 if __name__ == '__main__':
+    #url validation error
     crawl_palo()
     crawl_bdnews()
     crawl_jugantor()
