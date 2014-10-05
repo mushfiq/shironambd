@@ -43,6 +43,7 @@ def crawl_bdnews():
     source = Source.objects.get(name="bdnews24")
     urls = source.urls
     for url in urls:
+        import pdb;pdb.set_trace()
         rss = RSSCrawler(url)
         rss.process()
 
@@ -113,7 +114,7 @@ def remove_duplicates_by_title():
 	
 if __name__ == '__main__':
     #url validation error
-    crawl_palo()
+    # crawl_palo()
     crawl_bdnews()
-    crawl_jugantor()
+    # crawl_jugantor()
 

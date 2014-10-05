@@ -57,7 +57,6 @@ class RSSCrawler(BaseCrawler):
                 news.author = self.get_author(entry)
                 news.published_at = self.get_published_at(entry)
                 self.do_save(news)
-                # print "goo"
             except Exception as e:
                 print "Error Occured!", e
                 pass

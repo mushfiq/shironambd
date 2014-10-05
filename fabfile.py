@@ -1,7 +1,7 @@
 from fabric.api import local, run, env, put
 env.graceful = False
 
-# env.user = ''
+env.user = 'mushfiq'
 env.site_root = '/var/www/news'
 
 def server():

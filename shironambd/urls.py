@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^contact-us', 'shironambd.home.views.contactus'),
     url(r'legal', 'shironambd.home.views.legal'),
     url(r'success', 'shironambd.home.views.success'),
-    url(r'', 'shironambd.home.views.index')
+    url(r'$', 'shironambd.home.views.index')
     
     # url(r'^admin/', include(admin.site.urls)),
 )
