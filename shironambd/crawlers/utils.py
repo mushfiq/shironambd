@@ -13,19 +13,24 @@ import os
 import setup_django
 from shironambd.home.models import News, Source
 
+#fix this: using django url validator
+def validate_new_link(source, ref):
+    if ref.find('http') == -1 and ref.find('/') != 0:
+        link = source.website+'/'+ref
+    elif ref.find('/') == 0:
+        link = source.website+ref
+    else:    
+        link = s.find('a')['href']
+    return link
+    
 def build_news_object(soup_news, source_name):
     s = soup_news.find('h2', {'class':'title'})
-    source_object = Source.objects.get(name=source_name)
+    source = Source.objects.get(name=source_name)
     n = News()
     n.title = s.find('a').text
-    n.source = source_object
+    n.source = source
     ref = s.find('a')['href']
-    if ref.find('http') == -1:
-        n.link = source_object.website+'/'+ref
-    else:    
-        n.link = s.find('a')['href']
-        print n.link
-
+    n.link = validate_new_link(source, ref)
     return n
 
 def is_valid(news_obj):

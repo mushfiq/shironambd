@@ -111,10 +111,36 @@ def remove_duplicates_by_title():
 	print "Total %d news deleted!" % counter
 	
 	return
+    
+#fix
+def remove_broken_news_by_link(source_name):
+    source = Source.objects.get(name=source_name)
+    all_links = [news.link for news in News.objects.filter(source=source)]  
+    # links = set(all_links)
+    c = 0
+    
+    for link in all_links:
+        if link.find('com//') > -1:
+            try:
+                dup = News.objects.get(link=link)
+            except News.MultipleObjectsReturned:
+                dup = News.objects.filter(link=link)
+                
+            
+            except News.DoesNotExist:
+               pass
+             
+            dup.delete()
+            
+            c+=1
+
+    print "Total %d articles deleted" % c
+    
 	
 if __name__ == '__main__':
     #url validation error
-    # crawl_palo()
-    crawl_bdnews()
+    crawl_palo()
+    # remove_broken_news_by_link('ProthomAlo')
+    # crawl_bdnews()
     # crawl_jugantor()
 

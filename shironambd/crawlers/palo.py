@@ -31,7 +31,6 @@ LIFESTYLE_SUB_CATEGORIES = ['occupation','travel','advice','recipe','fashion']
 SOURCE_NAME = 'ProthomAlo'
 				
 class PAlo(BaseCrawler):
-	
 
     def soup_to_news(self):
     	soup = self.get_soup()
@@ -50,6 +49,7 @@ class PAlo(BaseCrawler):
     			logging.error("Error Ocurred! %s" %e)
     			print "Error",e
     			pass
+                
     def get_lead_news(self):
     	soup = self.get_soup()
     	for div_id in LEAD_NEWS_DIV_IDS:
