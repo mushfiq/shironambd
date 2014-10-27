@@ -24,7 +24,7 @@ def bdnews():
 
 @periodic_task(run_every=timedelta(seconds=300))
 def check_status():
-    palo.delay()
-    bdnews.delay()
-    jugantor.delay()
+    palo.delay(expires=100)
+    bdnews.delay(expires=100)
+    jugantor.delay(expires=100)
 
