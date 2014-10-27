@@ -15,6 +15,8 @@ class Source(mongo.Document):
     	'collection': 'sources'
     }
 	
+    def aggregate():
+        return
 	
 class News(mongo.Document):
     title = mongo.StringField(required=True)

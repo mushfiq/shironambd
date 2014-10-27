@@ -22,6 +22,12 @@ from django.core.exceptions import MultipleObjectsReturned
 from jugantor import JugnatorCrawler
 from rss import RSSCrawler
 
+from tests import TestParser
+
+PARSERS = {
+    'test_parser': TestParser
+}
+
 def configire_logging():
 	logging.basicConfig(format='%(asctime)s %(message)s',filename='logs/crawler.log',level=logging.DEBUG)
 	    
@@ -43,7 +49,6 @@ def crawl_bdnews():
     source = Source.objects.get(name="bdnews24")
     urls = source.urls
     for url in urls:
-        import pdb;pdb.set_trace()
         rss = RSSCrawler(url)
         rss.process()
 
@@ -135,11 +140,21 @@ def remove_broken_news_by_link(source_name):
             c+=1
 
     print "Total %d articles deleted" % c
-    
-	
+
+
+#TODO: use this method for future refactor
+def aggregate_news():
+    sources = Source.objects.all()
+    #todo Add parse for all crawlers
+    for source in sources:
+        parser_name = source.parser
+        parser_obj = PARSERS[parser_name]()
+        parser_obj.parse()
+
 if __name__ == '__main__':
     #url validation error
-    crawl_palo()
+    # crawl_palo()
+    aggregate_news()
     # remove_broken_news_by_link('ProthomAlo')
     # crawl_bdnews()
     # crawl_jugantor()
